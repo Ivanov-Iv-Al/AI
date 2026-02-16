@@ -4,8 +4,8 @@ from scipy import stats
 
 print("=== ЗАГРУЗКА ДАННЫХ ===\n")
 
-data = np.genfromtxt('abalone.csv', 
-                     delimiter=',', 
+data = np.genfromtxt('abalone.csv',
+                     delimiter=',',
                      dtype=None,
                      names=True,
                      encoding='utf-8')
@@ -35,7 +35,7 @@ age_labels = ['Молодые (<=9)', 'Взрослые (10-15)', 'Старые 
 print("\n=== СОЗДАНИЕ КЛАССОВ ДЛЯ КЛАССИФИКАЦИИ ===\n")
 for i, label in enumerate(age_labels):
     count = np.sum(age_category == i)
-    print(f"{label}: {count} особей ({count/len(data)*100:.1f}%)")
+    print(f"{label}: {count} особей ({count / len(data) * 100:.1f}%)")
 
 print("\n=== ОСНОВНАЯ ИНФОРМАЦИЯ ===\n")
 print(f"Всего записей: {len(data)}")
@@ -51,7 +51,7 @@ for name in data.dtype.names:
     print(f"{name}: {missing} пропусков")
 
 print("\n=== СТАТИСТИКА ПО ЧИСЛОВЫМ ПРИЗНАКАМ ===\n")
-features = ['length', 'diameter', 'height', 'whole_weight', 
+features = ['length', 'diameter', 'height', 'whole_weight',
             'shucked_weight', 'viscera_weight', 'shell_weight', 'rings']
 
 for feature in features:
@@ -66,20 +66,20 @@ for feature in features:
 print("\n=== РАСПРЕДЕЛЕНИЕ ПО ПОЛУ ===\n")
 unique_sex, sex_counts = np.unique(sex, return_counts=True)
 for s, count in zip(unique_sex, sex_counts):
-    print(f"Пол {s}: {count} особей ({count/len(data)*100:.1f}%)")
+    print(f"Пол {s}: {count} особей ({count / len(data) * 100:.1f}%)")
 
 fig = plt.figure(figsize=(20, 12))
 
 plt.subplot(2, 3, 1)
 colors = ['lightgreen', 'lightblue', 'lightcoral']
-bars = plt.bar(age_labels, [np.sum(age_category == i) for i in range(3)], 
+bars = plt.bar(age_labels, [np.sum(age_category == i) for i in range(3)],
                color=colors, edgecolor='black')
 plt.title('Распределение возрастных классов', fontsize=14, fontweight='bold')
 plt.ylabel('Количество особей')
 for bar in bars:
-    height = bar.get_height()
-    plt.text(bar.get_x() + bar.get_width()/2., height,
-             f'{int(height)}', ha='center', va='bottom')
+    height_val = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 2., height_val,
+             f'{int(height_val)}', ha='center', va='bottom')
 
 plt.subplot(2, 3, 2)
 plt.hist(rings, bins=30, edgecolor='black', alpha=0.7, color='purple')
@@ -91,7 +91,7 @@ plt.grid(True, alpha=0.3)
 plt.subplot(2, 3, 3)
 for i in range(3):
     mask = age_category == i
-    plt.scatter(length[mask], whole_weight[mask], 
+    plt.scatter(length[mask], whole_weight[mask],
                 label=age_labels[i], alpha=0.6, s=20)
 plt.title('Зависимость веса от длины', fontsize=14, fontweight='bold')
 plt.xlabel('Длина')
@@ -102,7 +102,7 @@ plt.grid(True, alpha=0.3)
 plt.subplot(2, 3, 4)
 sex_list = ['M', 'F', 'I']
 data_by_sex = [rings[sex == s] for s in sex_list]
-plt.boxplot(data_by_sex, labels=['Самец (M)', 'Самка (F)', 'Молодой (I)'],
+plt.boxplot(data_by_sex, tick_labels=['Самец (M)', 'Самка (F)', 'Молодой (I)'],
             patch_artist=True, boxprops=dict(facecolor='lightblue'))
 plt.title('Распределение возраста по полу', fontsize=14, fontweight='bold')
 plt.ylabel('Количество колец')
@@ -111,7 +111,7 @@ plt.grid(True, alpha=0.3, axis='y')
 plt.subplot(2, 3, 5)
 for i in range(3):
     mask = age_category == i
-    plt.scatter(length[mask], diameter[mask], 
+    plt.scatter(length[mask], diameter[mask],
                 label=age_labels[i], alpha=0.6, s=20)
 plt.title('Длина vs Диаметр', fontsize=14, fontweight='bold')
 plt.xlabel('Длина')
@@ -120,10 +120,10 @@ plt.legend()
 plt.grid(True, alpha=0.3)
 
 plt.subplot(2, 3, 6)
-for s, color, label in zip(['M', 'F', 'I'], ['blue', 'red', 'green'], 
-                            ['Самец', 'Самка', 'Молодой']):
+for s, color, label in zip(['M', 'F', 'I'], ['blue', 'red', 'green'],
+                           ['Самец', 'Самка', 'Молодой']):
     mask = sex == s
-    plt.scatter(rings[mask], shell_weight[mask], 
+    plt.scatter(rings[mask], shell_weight[mask],
                 c=color, label=label, alpha=0.5, s=15)
 plt.title('Вес раковины vs Возраст', fontsize=14, fontweight='bold')
 plt.xlabel('Количество колец')
@@ -136,10 +136,10 @@ plt.show()
 
 print("\n=== КОРРЕЛЯЦИЯ С ВОЗРАСТОМ (КОЛЬЦАМИ) ===\n")
 
-numeric_data = np.column_stack([length, diameter, height, whole_weight, 
+numeric_data = np.column_stack([length, diameter, height, whole_weight,
                                 shucked_weight, viscera_weight, shell_weight])
 
-feature_names = ['Length', 'Diameter', 'Height', 'Whole weight', 
+feature_names = ['Length', 'Diameter', 'Height', 'Whole weight',
                  'Shucked weight', 'Viscera weight', 'Shell weight']
 
 correlations = []
@@ -164,7 +164,7 @@ for i, name in enumerate(feature_names):
         std_val = np.std(numeric_data[mask, i])
         class_means.append(mean_val)
         print(f"  {age_labels[c]}: среднее={mean_val:.3f}, стд={std_val:.3f}")
-    
+
     separability = max(class_means) - min(class_means)
     print(f"  Размах между классами: {separability:.3f}")
 
