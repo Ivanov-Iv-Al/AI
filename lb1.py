@@ -2,8 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 
-print("=== ЗАГРУЗКА ДАННЫХ ===\n")
-
 data = np.genfromtxt('abalone.csv',
                      delimiter=',',
                      dtype=None,
@@ -32,16 +30,13 @@ age_category[rings >= 16] = 2
 
 age_labels = ['Молодые (<=9)', 'Взрослые (10-15)', 'Старые (>=16)']
 
-print("\n=== СОЗДАНИЕ КЛАССОВ ДЛЯ КЛАССИФИКАЦИИ ===\n")
 for i, label in enumerate(age_labels):
     count = np.sum(age_category == i)
     print(f"{label}: {count} особей ({count / len(data) * 100:.1f}%)")
 
-print("\n=== ОСНОВНАЯ ИНФОРМАЦИЯ ===\n")
 print(f"Всего записей: {len(data)}")
 print(f"Количество признаков: {len(data.dtype.names)}")
 
-print("\n=== ПРОПУЩЕННЫЕ ЗНАЧЕНИЯ ===\n")
 for name in data.dtype.names:
     col_data = data[name]
     if col_data.dtype.kind in ['f', 'i']:
@@ -63,7 +58,6 @@ for feature in features:
     print(f"  Макс: {np.max(data_array):.3f}")
     print(f"  Стд. отклонение: {np.std(data_array):.3f}")
 
-print("\n=== РАСПРЕДЕЛЕНИЕ ПО ПОЛУ ===\n")
 unique_sex, sex_counts = np.unique(sex, return_counts=True)
 for s, count in zip(unique_sex, sex_counts):
     print(f"Пол {s}: {count} особей ({count / len(data) * 100:.1f}%)")
@@ -134,8 +128,6 @@ plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
 
-print("\n=== КОРРЕЛЯЦИЯ С ВОЗРАСТОМ (КОЛЬЦАМИ) ===\n")
-
 numeric_data = np.column_stack([length, diameter, height, whole_weight,
                                 shucked_weight, viscera_weight, shell_weight])
 
@@ -149,11 +141,9 @@ for i in range(numeric_data.shape[1]):
     print(f"{feature_names[i]}: {corr:.3f}")
 
 sorted_idx = np.argsort(correlations)[::-1]
-print("\n=== ПРИЗНАКИ, ОТСОРТИРОВАННЫЕ ПО КОРРЕЛЯЦИИ ===\n")
+
 for idx in sorted_idx:
     print(f"{feature_names[idx]}: {correlations[idx]:.3f}")
-
-print("\n=== АНАЛИЗ РАЗДЕЛИМОСТИ КЛАССОВ ===\n")
 
 for i, name in enumerate(feature_names):
     print(f"\n{name}:")
@@ -168,7 +158,6 @@ for i, name in enumerate(feature_names):
     separability = max(class_means) - min(class_means)
     print(f"  Размах между классами: {separability:.3f}")
 
-print("\n=== ОСНОВНЫЕ ВЫВОДЫ ДЛЯ КЛАССИФИКАЦИИ ===\n")
 print("1. Размер данных: {} записей, {} признаков".format(len(data), len(feature_names)))
 print("2. Пропущенные значения: отсутствуют")
 print("3. Целевая переменная (возраст) разбита на 3 класса:")
