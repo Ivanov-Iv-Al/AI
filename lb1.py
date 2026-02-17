@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import stats
 
 data = np.genfromtxt('abalone.csv',
                      delimiter=',',
@@ -45,7 +44,6 @@ for name in data.dtype.names:
         missing = np.sum(col_data == None)
     print(f"{name}: {missing} пропусков")
 
-print("\n=== СТАТИСТИКА ПО ЧИСЛОВЫМ ПРИЗНАКАМ ===\n")
 features = ['length', 'diameter', 'height', 'whole_weight',
             'shucked_weight', 'viscera_weight', 'shell_weight', 'rings']
 
@@ -75,12 +73,12 @@ for bar in bars:
     plt.text(bar.get_x() + bar.get_width() / 2., height_val,
              f'{int(height_val)}', ha='center', va='bottom')
 
-plt.subplot(2, 3, 2)
-plt.hist(rings, bins=30, edgecolor='black', alpha=0.7, color='purple')
-plt.title('Распределение количества колец', fontsize=14, fontweight='bold')
-plt.xlabel('Количество колец')
-plt.ylabel('Частота')
-plt.grid(True, alpha=0.3)
+# plt.subplot(2, 3, 2)
+# plt.hist(rings, bins=30, edgecolor='black', alpha=0.7, color='purple')
+# plt.title('Распределение количества колец', fontsize=14, fontweight='bold')
+# plt.xlabel('Количество колец')
+# plt.ylabel('Частота')
+# plt.grid(True, alpha=0.3)
 
 plt.subplot(2, 3, 3)
 for i in range(3):
@@ -93,14 +91,14 @@ plt.ylabel('Общий вес')
 plt.legend()
 plt.grid(True, alpha=0.3)
 
-plt.subplot(2, 3, 4)
-sex_list = ['M', 'F', 'I']
-data_by_sex = [rings[sex == s] for s in sex_list]
-plt.boxplot(data_by_sex, tick_labels=['Самец (M)', 'Самка (F)', 'Молодой (I)'],
-            patch_artist=True, boxprops=dict(facecolor='lightblue'))
-plt.title('Распределение возраста по полу', fontsize=14, fontweight='bold')
-plt.ylabel('Количество колец')
-plt.grid(True, alpha=0.3, axis='y')
+# plt.subplot(2, 3, 4)
+# sex_list = ['M', 'F', 'I']
+# data_by_sex = [rings[sex == s] for s in sex_list]
+# plt.boxplot(data_by_sex, labels=['Самец (M)', 'Самка (F)', 'Молодой (I)'],
+#             patch_artist=True, boxprops=dict(facecolor='lightblue'))
+# plt.title('Распределение возраста по полу', fontsize=14, fontweight='bold')
+# plt.ylabel('Количество колец')
+# plt.grid(True, alpha=0.3, axis='y')
 
 plt.subplot(2, 3, 5)
 for i in range(3):
@@ -158,15 +156,15 @@ for i, name in enumerate(feature_names):
     separability = max(class_means) - min(class_means)
     print(f"  Размах между классами: {separability:.3f}")
 
-print("1. Размер данных: {} записей, {} признаков".format(len(data), len(feature_names)))
-print("2. Пропущенные значения: отсутствуют")
-print("3. Целевая переменная (возраст) разбита на 3 класса:")
+print("Размер данных: {} записей, {} признаков".format(len(data), len(feature_names)))
+print("Пропущенные значения: отсутствуют")
+print("Целевая переменная (возраст) разбита на 3 класса:")
 for i, label in enumerate(age_labels):
     print(f"   - {label}: {np.sum(age_category == i)} особей")
-print("\n4. Наиболее информативные признаки для классификации:")
+print("\nНаиболее информативные признаки для классификации:")
 for i in sorted_idx[:3]:
     print(f"   - {feature_names[i]} (корреляция: {correlations[i]:.3f})")
-print("\n5. Наблюдения:")
+print("\nНаблюдения:")
 print("   - Самки в среднем старше самцов")
 print("   - Молодые особи имеют меньший разброс параметров")
 print("   - Весовые характеристики лучше всего коррелируют с возрастом")
