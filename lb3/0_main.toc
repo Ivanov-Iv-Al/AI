@@ -1,0 +1,11 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Введение}{3}{chapter*.2}%
+\contentsline {chapter}{\chapternumberline {1}Выполнение}{4}{chapter.1}%
+\contentsline {chapter}{\chapternumberline {2}Выполнение работы}{5}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Теоретическое обоснование}{5}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Методика и порядок выполнения работы}{5}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Индивидуальное задание}{5}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Ход выполнения работы}{6}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Результаты анализа}{11}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Контрольные вопросы}{12}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Листинг программы}{14}{section.2.5}%
