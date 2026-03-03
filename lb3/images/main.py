@@ -5,6 +5,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import confusion_matrix
 
 sns.set_style("whitegrid")
 plt.rcParams['figure.figsize'] = (15, 10)
@@ -68,7 +69,6 @@ plt.xlabel('K')
 plt.ylabel('test_size')
 plt.title('Hold-out Accuracy')
 plt.tight_layout()
-plt.savefig('holdout_heatmap.png', dpi=150, bbox_inches='tight')
 plt.close()
 
 k_values = range(1, 51)
@@ -94,16 +94,22 @@ plt.xlabel('K')
 plt.ylabel('folds')
 plt.title('Cross-Validation Accuracy')
 plt.tight_layout()
-plt.savefig('cv_heatmap.png', dpi=150, bbox_inches='tight')
 plt.close()
 
-optimal_k = 15
+optimal_k =
 final_model = KNeighborsClassifier(n_neighbors=optimal_k)
 final_model.fit(X_scaled, y)
 
 y_pred_all = final_model.predict(X_scaled)
-from sklearn.metrics import confusion_matrix
+
 cm = confusion_matrix(y, y_pred_all)
+
+kount = 0
+for i in range (0,len(y)):
+    if y[i] != y_pred_all[i]:
+        print(f"{i}||||||Преположительно {y[i]}, фатически {y_pred_all[i]}")
+        kount += 1
+print(f"Кол-во неугаданных:{kount}")
 
 plt.figure(figsize=(8, 6))
 age_labels = ['Young (<=9)', 'Adult (10-15)', 'Old (>=16)']
@@ -114,5 +120,5 @@ plt.xlabel('Predicted')
 plt.ylabel('True')
 plt.title(f'Confusion Matrix (K={optimal_k})')
 plt.tight_layout()
-plt.savefig('confusion_matrix.png', dpi=150, bbox_inches='tight')
 plt.close()
+
