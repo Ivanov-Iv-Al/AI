@@ -59,7 +59,7 @@ for i, k in enumerate(k_values):
 plt.figure(figsize=(14, 8))
 sns.heatmap(
     holdout_scores.T,
-    xticklabels=k_values[::5],
+    xticklabels=k_values[::1],
     yticklabels=[f"{ts:.2f}" for ts in test_sizes],
     annot=True, fmt='.3f', cmap='viridis',
     cbar_kws={'label': 'Accuracy'},
@@ -69,6 +69,7 @@ plt.xlabel('K')
 plt.ylabel('test_size')
 plt.title('Hold-out Accuracy')
 plt.tight_layout()
+plt.show()
 plt.close()
 
 k_values = range(1, 51)
@@ -84,7 +85,7 @@ for i, k in enumerate(k_values):
 plt.figure(figsize=(14, 8))
 sns.heatmap(
     cv_scores.T,
-    xticklabels=k_values[::5],
+    xticklabels=k_values[::1],
     yticklabels=list(cv_folds),
     annot=True, fmt='.3f', cmap='plasma',
     cbar_kws={'label': 'Avg Accuracy'},
@@ -94,15 +95,30 @@ plt.xlabel('K')
 plt.ylabel('folds')
 plt.title('Cross-Validation Accuracy')
 plt.tight_layout()
+plt.show()
 plt.close()
 
-optimal_k =
+optimal_k = 26
 final_model = KNeighborsClassifier(n_neighbors=optimal_k)
 final_model.fit(X_scaled, y)
 
 y_pred_all = final_model.predict(X_scaled)
 
 cm = confusion_matrix(y, y_pred_all)
+
+print("Точность для разных k")
+print(f"{'K':<5} {'Hold-out':<10} {'CV':<10} {'Среднее':<10}")
+
+holdout_avg_by_k = np.mean(holdout_scores, axis=1)
+
+cv_avg_by_k = np.mean(cv_scores, axis=1)
+
+for k in range(1,51):
+    siv = []
+    holdout_val = holdout_avg_by_k[k-1]
+    cv_val = cv_avg_by_k[k-1]
+    avg_val = (holdout_val + cv_val) / 2
+    print(f"{k} {holdout_val:.4f} {cv_val:.4f} {avg_val:.4f}")
 
 kount = 0
 for i in range (0,len(y)):
@@ -120,5 +136,6 @@ plt.xlabel('Predicted')
 plt.ylabel('True')
 plt.title(f'Confusion Matrix (K={optimal_k})')
 plt.tight_layout()
+plt.show()
 plt.close()
 
