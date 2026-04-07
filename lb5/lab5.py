@@ -10,6 +10,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 import warnings
+from sklearn.metrics import mean_absolute_percentage_error
 warnings.filterwarnings('ignore')
 
 plt.rcParams['figure.figsize'] = (12, 8)
@@ -78,6 +79,30 @@ plt.show()
 
 X = df.drop('Rings', axis=1)
 y = df['Rings']
+
+numeric_cols = X.select_dtypes(include=['number']).columns.tolist()
+
+mask = pd.Series([True] * len(X))
+
+for col in numeric_cols:
+    Q1 = X[col].quantile(0.25)
+    Q3 = X[col].quantile(0.75)
+    IQR = Q3 - Q1
+    lower = Q1 - 1.5 * IQR
+    upper = Q3 + 1.5 * IQR
+    mask = mask & (X[col] >= lower) & (X[col] <= upper)
+
+X = X[mask]
+y = y[mask]
+
+print(f"Осталось записей после очистки: {len(X)}")
+
+plt.figure(figsize=(15, 6))
+sns.boxplot(data=X[numeric_cols])
+plt.title("Распределение признаков после удаления выбросов")
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
 
 numeric_features = X.select_dtypes(include=[np.number]).columns.tolist()
 categorical_features = X.select_dtypes(include=['object']).columns.tolist()
@@ -159,7 +184,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print(f"Размер обучающей выборки: {X_train.shape}")
 print(f"Размер тестовой выборки: {X_test.shape}")
-print(f"Соотношение тест:обучение = 20:80")
 
 print("\nРаспределение целевой переменной в обучающей выборке:")
 print(y_train.value_counts().sort_index().head(10))
@@ -175,12 +199,17 @@ train_mse = mean_squared_error(y_train, y_train_pred)
 test_mse = mean_squared_error(y_test, y_test_pred)
 train_r2 = r2_score(y_train, y_train_pred)
 test_r2 = r2_score(y_test, y_test_pred)
+mape_t = mean_absolute_percentage_error(y_train, y_train_pred)
+mape_test = mean_absolute_percentage_error(y_test, y_test_pred)
+
 
 print("\nРезультаты обучения модели линейной регрессии:")
 print(f"  MSE на обучающей выборке: {train_mse:.4f}")
 print(f"  MSE на тестовой выборке: {test_mse:.4f}")
 print(f"  R² на обучающей выборке: {train_r2:.4f}")
 print(f"  R² на тестовой выборке: {test_r2:.4f}")
+print(f"  Mape на обучающей выборке: {mape_t:.4f}")
+print(f"  Mape на тестовой выборке: {mape_test:.4f}")
 
 plt.figure(figsize=(14, 6))
 
