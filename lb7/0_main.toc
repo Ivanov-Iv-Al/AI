@@ -1,0 +1,21 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Введение}{3}{chapter*.2}%
+\contentsline {chapter}{\chapternumberline {1}Выполнение лабораторной работы №7}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Выбор набора данных}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Теоретическое обоснование}{4}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Стратегии выбора значимых переменных}{4}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.3}Ход выполнения работы}{5}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Шаг 1: Загрузка и первичный анализ данных}{5}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Шаг 2: Анализ корреляции признаков}{6}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Шаг 3: Обработка категориальных данных}{7}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Шаг 4: Разделение на обучающую и тестовую выборки}{8}{subsection.1.3.4}%
+\contentsline {subsection}{\numberline {1.3.5}Шаг 5: Модель со всеми признаками (All-in)}{8}{subsection.1.3.5}%
+\contentsline {subsection}{\numberline {1.3.6}Шаг 6: Backward Elimination с использованием p-значений}{9}{subsection.1.3.6}%
+\contentsline {subsection}{\numberline {1.3.7}Шаг 7: Модель со значимыми признаками}{9}{subsection.1.3.7}%
+\contentsline {subsection}{\numberline {1.3.8}Шаг 8: Анализ важности признаков}{10}{subsection.1.3.8}%
+\contentsline {subsection}{\numberline {1.3.9}Шаг 9: Визуализация результатов}{11}{subsection.1.3.9}%
+\contentsline {subsection}{\numberline {1.3.10}Шаг 10: Применение модели для нового объекта}{13}{subsection.1.3.10}%
+\contentsline {section}{\numberline {1.4}Сравнение моделей}{14}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Анализ результатов}{14}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Контрольные вопросы}{15}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Листинг программы}{16}{section.1.7}%
