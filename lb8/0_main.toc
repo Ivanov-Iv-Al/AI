@@ -1,0 +1,25 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Введение}{3}{chapter*.2}%
+\contentsline {chapter}{\chapternumberline {1}Выполнение лабораторной работы №8}{4}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Выбор набора данных}{4}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Теоретическое обоснование}{4}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Математическая модель полиномиальной регрессии}{4}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Особенности работы с датасетом Abalone}{5}{subsection.1.2.2}%
+\contentsline {section}{\numberline {1.3}Ход выполнения работы}{5}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Шаг 1: Загрузка и первичный анализ данных}{5}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Шаг 2: Визуализация исходных данных}{6}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Шаг 3: Линейная регрессия (полином степени 1)}{6}{subsection.1.3.3}%
+\contentsline {subsection}{\numberline {1.3.4}Шаг 4: Полиномиальная регрессия различных степеней}{7}{subsection.1.3.4}%
+\contentsline {subsection}{\numberline {1.3.5}Шаг 5: Визуализация моделей различных степеней}{8}{subsection.1.3.5}%
+\contentsline {subsection}{\numberline {1.3.6}Шаг 6: Оценка на тестовой выборке}{9}{subsection.1.3.6}%
+\contentsline {subsection}{\numberline {1.3.7}Шаг 7: Анализ переобучения}{10}{subsection.1.3.7}%
+\contentsline {subsection}{\numberline {1.3.8}Шаг 8: Выбор оптимальной степени полинома}{10}{subsection.1.3.8}%
+\contentsline {subsection}{\numberline {1.3.9}Шаг 9: График MSE и R² от степени полинома}{11}{subsection.1.3.9}%
+\contentsline {subsection}{\numberline {1.3.10}Шаг 10: Предсказание для нового объекта}{12}{subsection.1.3.10}%
+\contentsline {subsection}{\numberline {1.3.11}Шаг 11: Применение пайплайна}{13}{subsection.1.3.11}%
+\contentsline {section}{\numberline {1.4}Сравнение моделей}{14}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Анализ результатов}{14}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Анализ зависимости качества от степени полинома}{14}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Интерпретация результатов для Abalone}{15}{subsection.1.5.2}%
+\contentsline {section}{\numberline {1.6}Контрольные вопросы}{15}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Листинг программы}{16}{section.1.7}%
