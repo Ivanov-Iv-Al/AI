@@ -1,0 +1,30 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Введение}{3}{chapter*.2}%
+\contentsline {chapter}{\chapternumberline {1}Выполнение лабораторной работы №9}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Выбор набора данных}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Теоретическое обоснование}{5}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Метод K-средних (K-Means)}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}Метрики оценки качества кластеризации}{5}{subsection.1.2.2}%
+\contentsline {subsubsection}{Silhouette Score}{6}{section*.3}%
+\contentsline {subsubsection}{Calinski-Harabasz Index}{6}{section*.4}%
+\contentsline {subsubsection}{Davies-Bouldin Index}{6}{section*.5}%
+\contentsline {section}{\numberline {1.3}Ход выполнения работы}{6}{section.1.3}%
+\contentsline {subsection}{\numberline {1.3.1}Шаг 1: Загрузка и первичный анализ данных}{6}{subsection.1.3.1}%
+\contentsline {subsection}{\numberline {1.3.2}Шаг 2: Предварительная обработка данных}{7}{subsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.3.3}Шаг 3: Определение оптимального количества кластеров}{7}{subsection.1.3.3}%
+\contentsline {subsubsection}{Метод локтя (Elbow Method)}{7}{section*.6}%
+\contentsline {subsubsection}{Silhouette Score анализ}{8}{section*.7}%
+\contentsline {subsection}{\numberline {1.3.4}Шаг 4: Результаты анализа качества}{8}{subsection.1.3.4}%
+\contentsline {subsection}{\numberline {1.3.5}Шаг 5: Визуализация кластеров с помощью PCA}{9}{subsection.1.3.5}%
+\contentsline {subsection}{\numberline {1.3.6}Шаг 6: Анализ распределения признаков по кластерам}{10}{subsection.1.3.6}%
+\contentsline {subsection}{\numberline {1.3.7}Шаг 7: Анализ возраста по кластерам}{11}{subsection.1.3.7}%
+\contentsline {subsection}{\numberline {1.3.8}Шаг 8: Анализ распределения пола по кластерам}{11}{subsection.1.3.8}%
+\contentsline {subsection}{\numberline {1.3.9}Шаг 9: Сравнение кластеризации с разным количеством кластеров}{12}{subsection.1.3.9}%
+\contentsline {subsection}{\numberline {1.3.10}Шаг 10: Иерархическая кластеризация}{13}{subsection.1.3.10}%
+\contentsline {section}{\numberline {1.4}Интерпретация результатов}{14}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Анализ результатов}{15}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Определение оптимального количества кластеров}{15}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Интерпретация кластеров}{15}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Связь с полом}{15}{subsection.1.5.3}%
+\contentsline {section}{\numberline {1.6}Контрольные вопросы}{16}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Листинг программы}{17}{section.1.7}%
