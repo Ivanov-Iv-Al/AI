@@ -1,82 +1,18 @@
-def plot_all_in_one(tx_grid, rx_grid_before, rx_grid_after, tx_symbols, rx_symbols):
-    """
-    Вывод всех графиков в соответствии с методичкой
-    """
-    # Расчет спектров
-    tx_spectrum = np.mean(np.abs(tx_grid), axis=1)
-    rx_spectrum_before = np.mean(np.abs(rx_grid_before), axis=1)
-    rx_spectrum_after = np.mean(np.abs(rx_grid_after), axis=1)
-    
-    # Расчет АЧХ канала
-    h_channel = rx_spectrum_before / (tx_spectrum + 1e-10)
-    
-    # Создание фигуры с 6 подграфиками (как в методичке)
-    fig = plt.figure(figsize=(16, 12))
-    
-    # 1. Спектр переданного OFDM символа
-    ax1 = plt.subplot(2, 3, 1)
-    ax1.plot(tx_spectrum, 'b-', linewidth=2)
-    ax1.set_title('Спектр переданного OFDM символа')
-    ax1.set_xlabel('Индекс поднесущей')
-    ax1.set_ylabel('Амплитуда')
-    ax1.grid(True)
-    ax1.set_xlim(0, len(tx_spectrum)-1)
-    
-    # 2. Спектр принятого OFDM символа ДО эквалайзинга
-    ax2 = plt.subplot(2, 3, 2)
-    ax2.plot(rx_spectrum_before, 'r-', linewidth=2)
-    ax2.set_title('Спектр принятого OFDM символа (до эквалайзинга)')
-    ax2.set_xlabel('Индекс поднесущей')
-    ax2.set_ylabel('Амплитуда')
-    ax2.grid(True)
-    ax2.set_xlim(0, len(rx_spectrum_before)-1)
-    
-    # 3. Спектр принятого OFDM символа ПОСЛЕ эквалайзинга
-    ax3 = plt.subplot(2, 3, 3)
-    ax3.plot(rx_spectrum_after, 'g-', linewidth=2)
-    ax3.set_title('Спектр принятого OFDM символа (после эквалайзинга)')
-    ax3.set_xlabel('Индекс поднесущей')
-    ax3.set_ylabel('Амплитуда')
-    ax3.grid(True)
-    ax3.set_xlim(0, len(rx_spectrum_after)-1)
-    
-    # 4. АЧХ канала (оценка)
-    ax4 = plt.subplot(2, 3, 4)
-    ax4.plot(h_channel, 'm-', linewidth=2)
-    ax4.set_title('Оценка АЧХ канала передачи')
-    ax4.set_xlabel('Индекс поднесущей')
-    ax4.set_ylabel('|H|')
-    ax4.grid(True)
-    ax4.set_xlim(0, len(h_channel)-1)
-    
-    # 5. Сигнальное созвездие QPSK в передатчике
-    ax5 = plt.subplot(2, 3, 5)
-    ax5.scatter([s.real for s in tx_symbols[:500]], [s.imag for s in tx_symbols[:500]], 
-                s=15, alpha=0.6, c='blue', marker='o')
-    ax5.set_title('Сигнальное созвездие QPSK в передатчике')
-    ax5.set_xlabel('I')
-    ax5.set_ylabel('Q')
-    ax5.grid(True)
-    ax5.axis('equal')
-    ax5.set_xlim(-1.5, 1.5)
-    ax5.set_ylim(-1.5, 1.5)
-    ax5.axhline(y=0, color='k', linewidth=0.5)
-    ax5.axvline(x=0, color='k', linewidth=0.5)
-    
-    # 6. Сигнальное созвездие QPSK в приёмнике (после эквалайзера)
-    ax6 = plt.subplot(2, 3, 6)
-    ax6.scatter([s.real for s in rx_symbols[:500]], [s.imag for s in rx_symbols[:500]], 
-                s=15, alpha=0.6, c='red', marker='o')
-    ax6.set_title('Сигнальное созвездие QPSK в приёмнике')
-    ax6.set_xlabel('I')
-    ax6.set_ylabel('Q')
-    ax6.grid(True)
-    ax6.axis('equal')
-    ax6.set_xlim(-1.5, 1.5)
-    ax6.set_ylim(-1.5, 1.5)
-    ax6.axhline(y=0, color='k', linewidth=0.5)
-    ax6.axvline(x=0, color='k', linewidth=0.5)
-    
-    plt.suptitle('OFDM система связи - анализ сигналов', fontsize=16, fontweight='bold')
-    plt.tight_layout()
-    plt.show()
+from mpl_toolkits.mplot3d import Axes3D
+
+fig = plt.figure(figsize=(12, 10))
+ax = fig.add_subplot(111, projection='3d')
+
+colors = ['red', 'green', 'blue']
+for i in range(3):
+    mask = clusters == i
+    ax.scatter(X_pca[mask, 0], X_pca[mask, 1], X_pca[mask, 2],
+               c=colors[i], label=f'Кластер {i}', alpha=0.5, s=10)
+
+ax.set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]*100:.1f}%)')
+ax.set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]*100:.1f}%)')
+ax.set_zlabel(f'PC3 ({pca.explained_variance_ratio_[2]*100:.1f}%)')
+ax.set_title(f'3D визуализация кластеров Abalone (K={optimal_k})')
+ax.legend()
+plt.savefig('lab9_clusters_pca_3d.png', dpi=150)
+plt.show()
