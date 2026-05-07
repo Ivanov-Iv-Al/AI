@@ -1,0 +1,136 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def part1():
+    np.random.seed(42)
+    h = np.array([1.0, 0.5, 0.2, 0.1])
+    n_trials = 100
+    snr_db_range = np.arange(0, 13, 1)
+    mse_values = []
+
+    for snr_db in snr_db_range:
+        snr_linear = 10 ** (snr_db / 10)
+        noise_power = 1 / snr_linear
+        mse_sum = 0
+
+        for _ in range(n_trials):
+            noise = np.sqrt(noise_power / 2) * (np.random.randn(len(h)) + 1j * np.random.randn(len(h)))
+            h_noisy = h + noise
+            mse_sum += np.mean(np.abs(h - h_noisy) ** 2)
+
+        mse_values.append(mse_sum / n_trials)
+
+    plt.figure(figsize=(10, 4))
+    plt.subplot(1, 2, 1)
+    plt.plot(snr_db_range, mse_values, 'b-o')
+    plt.xlabel('SNR (dB)')
+    plt.ylabel('MSE')
+    plt.title('MSE vs SNR for Channel Estimation')
+    plt.grid(True)
+    return snr_db_range, mse_values
+
+def generate_qpsk_symbols(n_symbols):
+    symbols = (np.random.randint(0, 4, n_symbols) * 2 - 3) + 1j * (np.random.randint(0, 4, n_symbols) * 2 - 3)
+    return symbols / np.sqrt(2)
+
+def generate_qam16_symbols(n_symbols):
+    mapping = {
+        0: -3-3j, 1: -3-1j, 2: -3+3j, 3: -3+1j,
+        4: -1-3j, 5: -1-1j, 6: -1+3j, 7: -1+1j,
+        8: 3-3j, 9: 3-1j, 10: 3+3j, 11: 3+1j,
+        12: 1-3j, 13: 1-1j, 14: 1+3j, 15: 1+1j
+    }
+    bits = np.random.randint(0, 16, n_symbols)
+    symbols = np.array([mapping[b] for b in bits])
+    return symbols / np.sqrt(10)
+
+def msi_equalizer(symbols, channel, snr_db):
+    snr_linear = 10 ** (snr_db / 10)
+    noise_power = 1 / snr_linear
+    noise = np.sqrt(noise_power / 2) * (np.random.randn(len(symbols)) + 1j * np.random.randn(len(symbols)))
+    rx_signal = np.convolve(symbols, channel, mode='full')[:len(symbols)] + noise
+    
+    h_est = channel + np.sqrt(noise_power / 2) * (np.random.randn(len(channel)) + 1j * np.random.randn(len(channel)))
+    H = np.fft.fft(h_est, len(symbols))
+    rx_freq = np.fft.fft(rx_signal)
+    equalized_freq = rx_freq / H
+    equalized = np.fft.ifft(equalized_freq)
+    return equalized
+
+def qpsk_demodulate(symbols):
+    bits = np.zeros(len(symbols), dtype=int)
+    bits[np.real(symbols) > 0] |= 1
+    bits[np.imag(symbols) > 0] |= 2
+    return bits
+
+def qam16_demodulate(symbols):
+    bits = np.zeros((len(symbols), 4), dtype=int)
+    real_part = np.real(symbols) * np.sqrt(10)
+    imag_part = np.imag(symbols) * np.sqrt(10)
+    
+    bits[:, 0] = (real_part > 0).astype(int)
+    bits[:, 1] = (np.abs(real_part) < 2).astype(int)
+    bits[:, 2] = (imag_part > 0).astype(int)
+    bits[:, 3] = (np.abs(imag_part) < 2).astype(int)
+    return bits
+
+def calculate_ser(original_symbols, demodulated_bits, modulation):
+    n_symbols = len(original_symbols)
+    if modulation == 'qpsk':
+        orig_bits = np.zeros((n_symbols, 2), dtype=int)
+        orig_bits[np.real(original_symbols) * np.sqrt(2) > 0, 0] = 1
+        orig_bits[np.imag(original_symbols) * np.sqrt(2) > 0, 1] = 1
+        errors = np.any(orig_bits != demodulated_bits, axis=1).sum()
+    else:
+        mapping = {
+            -3-3j: 0, -3-1j: 1, -3+3j: 2, -3+1j: 3,
+            -1-3j: 4, -1-1j: 5, -1+3j: 6, -1+1j: 7,
+            3-3j: 8, 3-1j: 9, 3+3j: 10, 3+1j: 11,
+            1-3j: 12, 1-1j: 13, 1+3j: 14, 1+1j: 15
+        }
+        orig_const = original_symbols * np.sqrt(10)
+        orig_symbols_idx = np.array([mapping[complex(np.round(x.real), np.round(x.imag))] for x in orig_const])
+        demod_bits_reshaped = demodulated_bits.reshape(-1, 4)
+        demod_symbols_idx = np.zeros(n_symbols, dtype=int)
+        for i in range(n_symbols):
+            b = demod_bits_reshaped[i]
+            idx = (b[0] << 3) | (b[1] << 2) | (b[2] << 1) | b[3]
+            demod_symbols_idx[i] = idx
+        errors = (orig_symbols_idx != demod_symbols_idx).sum()
+    return errors / n_symbols
+
+def part2():
+    np.random.seed(42)
+    channel = np.array([1.0, 0.3, 0.1])
+    n_symbols = 10000
+    snr_db_range = np.arange(0, 13, 2)
+    
+    ser_qpsk = []
+    ser_qam16 = []
+    
+    for snr_db in snr_db_range:
+        qpsk_symbols = generate_qpsk_symbols(n_symbols)
+        equalized_qpsk = msi_equalizer(qpsk_symbols, channel, snr_db)
+        demod_qpsk = qpsk_demodulate(equalized_qpsk)
+        ser_qpsk.append(calculate_ser(qpsk_symbols, demod_qpsk, 'qpsk'))
+        
+        qam16_symbols = generate_qam16_symbols(n_symbols)
+        equalized_qam16 = msi_equalizer(qam16_symbols, channel, snr_db)
+        demod_qam16 = qam16_demodulate(equalized_qam16)
+        ser_qam16.append(calculate_ser(qam16_symbols, demod_qam16, 'qam16'))
+    
+    plt.subplot(1, 2, 2)
+    plt.semilogy(snr_db_range, ser_qpsk, 'r-o', label='QPSK')
+    plt.semilogy(snr_db_range, ser_qam16, 'g-s', label='16-QAM')
+    plt.xlabel('SNR (dB)')
+    plt.ylabel('SER')
+    plt.title('SER vs SNR with MSI Equalizer')
+    plt.legend()
+    plt.grid(True)
+    return ser_qpsk, ser_qam16
+
+if __name__ == "__main__":
+    part1()
+    part2()
+    plt.tight_layout()
+    plt.show()
